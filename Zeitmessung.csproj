@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <AssemblyVersion>1.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\ATF.png" />
+    <None Remove="Assets\ATM.png" />
+    <None Remove="Assets\FF-Logo.png" />
+    <None Remove="Assets\GK.png" />
+    <None Remove="Assets\ico-eingekreiste-1.png" />
+    <None Remove="Assets\ico-stoppuhr.png" />
+    <None Remove="Assets\ico-ton.png" />
+    <None Remove="Assets\ico-video.png" />
+    <None Remove="Assets\ico-würfel.png" />
+    <None Remove="Assets\Maschinist.png" />
+    <None Remove="Assets\Melder.png" />
+    <None Remove="Assets\STF.png" />
+    <None Remove="Assets\STM.png" />
+    <None Remove="Assets\WTF.png" />
+    <None Remove="Assets\WTM.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.Ports" Version="7.0.0" />
+    <PackageReference Include="System.Management" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\ATF.png" />
+    <Resource Include="Assets\ATM.png" />
+    <Resource Include="Assets\FF-Logo.png" />
+    <Resource Include="Assets\GK.png" />
+    <Resource Include="Assets\ico-eingekreiste-1.png" />
+    <Resource Include="Assets\ico-stoppuhr.png" />
+    <Resource Include="Assets\ico-ton.png" />
+    <Resource Include="Assets\ico-video.png" />
+    <Resource Include="Assets\ico-würfel.png" />
+    <Resource Include="Assets\Maschinist.png" />
+    <Resource Include="Assets\Melder.png" />
+    <Resource Include="Assets\STF.png" />
+    <Resource Include="Assets\STM.png" />
+    <Resource Include="Assets\WTF.png" />
+    <Resource Include="Assets\WTM.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\Angriffsbefehl_LFLB.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
