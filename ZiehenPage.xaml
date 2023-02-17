@@ -1,0 +1,78 @@
+﻿<Page x:Class="Zeitmessung.ZiehenPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Zeitmessung"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ZiehenPage">
+    
+    <Page.Resources>
+        <ResourceDictionary Source="./ResourceDictionarys/StyleDictionary.xaml"/>
+    </Page.Resources>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <Border x:Name="borderBack" Grid.Row="0" Grid.RowSpan="2" Background="#F2EFED"  CornerRadius="3" BorderBrush="#ED4556" BorderThickness="0">
+            <StackPanel  Margin="5" Orientation="Horizontal" FlowDirection="RightToLeft" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel>
+                    <StackPanel  Margin="5" Orientation="Horizontal" FlowDirection="RightToLeft" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <StackPanel>
+                            <Button  x:Name="btSTM" Style="{StaticResource RoundButton}" Click="btSTM_Click">
+                                <Image x:Name="imgSTM" Style="{StaticResource imgSTM}" />
+                            </Button>
+                            <Button  x:Name="btSTF" Style="{StaticResource RoundButton}" Click="btSTF_Click">
+                                <Image x:Name="imgSTF" Style="{StaticResource imgSTF}" />
+                            </Button>
+                        </StackPanel>
+                        <StackPanel>
+                            <Button x:Name="btWTM" Style="{StaticResource RoundButton}" Click="btWTM_Click">
+                                <Image x:Name="imgWTM" Style="{StaticResource imgWTM}"/>
+                            </Button>
+                            <Button x:Name="btWTF" Style="{StaticResource RoundButton}" Click="btWTF_Click">
+                                <Image x:Name="imgWTF" Style="{StaticResource imgWTF}"/>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel>
+                            <Button x:Name="btATM" Style="{StaticResource RoundButton}" Click="btATM_Click">
+                                <Image x:Name="imgATM" Style="{StaticResource imgATM}"/>
+                            </Button>
+                            <Button x:Name="btATF" Style="{StaticResource RoundButton}" Click="btATF_Click">
+                                <Image x:Name="imgATF" Style="{StaticResource imgATF}"/>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel>
+                            <Button x:Name="btMelder" Style="{StaticResource RoundButton}" Click="btMelder_Click" >
+                                <Image x:Name="imgMelder" Style="{StaticResource imgMelder}"/>
+                            </Button>
+                            <Button x:Name="btMaschinist" Style="{StaticResource RoundButton}" Click="btMaschinist_Click" >
+                                <Image x:Name="imgMaschinist" Style="{StaticResource imgMaschinist}"/>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Bottom">
+                            <Button x:Name="btGK" Style="{StaticResource RoundButton}" Click="btGK_Click" >
+                                <Image x:Name="imgGK" Style="{StaticResource imgGK}"/>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                
+            </StackPanel>
+            
+        </Border>
+        <Button x:Name="btEdit" Style="{StaticResource EditButton}" Grid.Row="0" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btEdit_Click" Focusable="false"  >
+            <Image  Style="{StaticResource icobearbeiten}"/>
+        </Button>
+
+        <Label x:Name="lbZiehen" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="85">Ziehen!</Label>
+    </Grid>
+</Page>

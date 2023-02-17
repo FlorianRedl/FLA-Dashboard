@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Reflection;
 using System.Media;
 using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace Zeitmessung
 {
@@ -24,12 +25,14 @@ namespace Zeitmessung
 
     public partial class MainWindow : Window
     {
+        public static MainWindow app;
+
         Stopwatch stopwatch = new();
         List<Run> runs = new();
         SerialPort activePort = new();
         public enum Status { Idle, AudioPlaying, StopTime, DisplayLastTime };
         Status activeStatus;
-        public enum Focus { Stopuhr, Würfeln, Analyse, Audio, SingleMode };
+        public enum Focus { Stopuhr, Ziehen, Analyse, Audio, SingleMode };
         Focus activeFocus;
 
         public event Action OnPressStart;
@@ -38,22 +41,24 @@ namespace Zeitmessung
 
         private MediaPlayer mediaPlayer = new MediaPlayer();
 
-
         //Settings
         public bool IsAudioEnabled { get; set; }
         public bool IsSingleMode { get; set; }
+
+        public bool IsZiehenEdit { get; set; }
 
         //Save Settings
         public string ComPort { get; set; }
 
         public MainWindow()
         {
+            app = this;
             InitializeComponent();
             var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString(2);
             tbVersion.Text = $"Version {version}";
             activeStatus = Status.Idle;
 
-            ComPort = Properties.Settings.Default.myColor;
+            ComPort = Properties.Settings.Default.ComPort;
 
             //Set last Focus
             OnPressStart += MainWindow_OnPressStart;
@@ -62,6 +67,7 @@ namespace Zeitmessung
             //Media
             mediaPlayer.Open(new Uri("Assets/Angriffsbefehl_LFLB.mp3", UriKind.Relative));
             mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
+
 
             List<string> list = new();
             list = SerialPort.GetPortNames().ToList();
@@ -75,7 +81,7 @@ namespace Zeitmessung
 
 
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(25);
+            timer.Interval = TimeSpan.FromMilliseconds(50);
             timer.Tick += timer_Tick;
             timer.Start();
 
@@ -91,6 +97,12 @@ namespace Zeitmessung
             switch (activeFocus)
             {
                 case Focus.Stopuhr:
+                    if (activeStatus == Status.StopTime && IsSingleMode)
+                    {
+                        activeStatus = Status.DisplayLastTime;
+                        stopwatch.Stop();
+                        return;
+                    }
                     if (activeStatus == Status.Idle && IsAudioEnabled)
                     {
                         PlayAudio();
@@ -106,16 +118,19 @@ namespace Zeitmessung
                         stopwatch.Reset();
                         activeStatus = Status.Idle;
                     }
+                    
                     break;
-                case Focus.Würfeln:
+                case Focus.Ziehen:
+                    ZiehenPage.instance.GetPosition();
                     break;
+
                 case Focus.Analyse:
                     break;
                 case Focus.Audio:
-                    cbAudio.IsChecked = !IsAudioEnabled;
+                    //cbAudio.IsChecked = !IsAudioEnabled;
                     break;
                 case Focus.SingleMode:
-                    cbSingleMode.IsChecked = !IsSingleMode;
+                    //cbSingleMode.IsChecked = !IsSingleMode;
                     break;
                 default:
                     break;
@@ -172,9 +187,7 @@ namespace Zeitmessung
             TimeSpan timeTaken = stopwatch.Elapsed;
             string foo = timeTaken.ToString(@"m\:ss\.ff");
             lbMainTime.Text = foo;
-            
-            lvRuns.Items.Refresh();
-
+ 
             //Audio
             if (mediaPlayer.Source!= null && activeStatus == Status.AudioPlaying)
             {
@@ -191,7 +204,7 @@ namespace Zeitmessung
 
         private void MyPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            Thread.Sleep(100);
+            Thread.Sleep(50);
             var port = sender as SerialPort;
             var inputString = port.ReadLine().Replace("\r\n", "").Replace("\r", "").Replace("\n", ""); ;
 
@@ -224,6 +237,8 @@ namespace Zeitmessung
             if (CheckComPort(selectedItem.ToString()))
             {
                 lbStatus.Text = "verbunden";
+                Properties.Settings.Default.ComPort = selectedItem.ToString();
+                Properties.Settings.Default.Save();
             }
             else
             {
@@ -315,6 +330,19 @@ namespace Zeitmessung
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Keyboard.Focus(btStopuhr);
+            var comPort = Properties.Settings.Default.ComPort;
+            if (!string.IsNullOrEmpty(comPort))
+            {
+                if (CheckComPort(comPort))
+                {
+                    lbStatus.Text = "verbunden";
+                }
+                else
+                {
+                    lbStatus.Text = "fehler";
+                }
+                cbComPorts.SelectedItem = comPort;
+            }
 
 
         }
@@ -329,38 +357,61 @@ namespace Zeitmessung
         }
 
 
-        private void SetFocus(string elementName)
+        public void SetFocus(string elementName)
         {
-            var b = new BrushConverter().ConvertFromString("#ED4556");
-            var color = b as SolidColorBrush;
+            //var b = new BrushConverter().ConvertFromString("#EF5D6B");
+            //var color = b as SolidColorBrush;
 
-            bAudio.Background = Brushes.Transparent;
-            bSingleMode.Background = Brushes.Transparent;
+            //bAudio.Background = Brushes.Transparent;
+            //bSingleMode.Background = Brushes.Transparent;
 
             switch (elementName)
             {
                 case "btStopuhr":
                     activeFocus = Focus.Stopuhr;
+                    SubFrame.Navigate(new Uri("ZiehenPage.xaml", UriKind.Relative));
                     break;
-                case "btWürfel":
-                    activeFocus = Focus.Würfeln;
+                case "btZiehen":
+                    activeFocus = Focus.Ziehen;
+                    SubFrame.Navigate(new Uri("ZiehenPage.xaml", UriKind.Relative));
                     break;
                 case "btAnalyse":
                     activeFocus = Focus.Analyse;
+                    SubFrame.Navigate(new Uri("AnalysePage.xaml", UriKind.Relative));
                     break;
-                case "cbAudio":
-                    activeFocus = Focus.Audio;
-                    bAudio.Background = color;
-                    break;
-                case "cbSingleMode":
-                    activeFocus = Focus.SingleMode;
-                    bSingleMode.Background = color;
-                    break;
+                //case "cbAudio":
+                //    activeFocus = Focus.Audio;
+                //    bAudio.Background = color;
+                //    break;
+                //case "cbSingleMode":
+                //    activeFocus = Focus.SingleMode;
+                //    bSingleMode.Background = color;
+                //    break;
 
             }
 
         }
-        
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.F5)
+            {
+                if (debugPannel.Visibility == Visibility.Visible) { debugPannel.Visibility = Visibility.Hidden; return; }
+                if (debugPannel.Visibility == Visibility.Hidden) debugPannel.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void cbAudioShort_Checked(object sender, RoutedEventArgs e)
+        {
+            mediaPlayer.Close();
+            mediaPlayer.Open(new Uri("Assets/Angriffsbefehl_LFLB_kurz.mp3", UriKind.Relative));
+        }
+
+        private void cbAudioShort_Unchecked(object sender, RoutedEventArgs e)
+        {
+            mediaPlayer.Close();
+            mediaPlayer.Open(new Uri("Assets/Angriffsbefehl_LFLB.mp3", UriKind.Relative));
+        }
     }
 
    

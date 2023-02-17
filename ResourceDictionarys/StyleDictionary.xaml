@@ -47,10 +47,13 @@
     <Style TargetType="Image" x:Key="icoEins">
         <Setter Property="Source" Value="../Assets/ico-eingekreiste-1.png"/>
     </Style>
+    <Style TargetType="Image" x:Key="icobearbeiten">
+        <Setter Property="Source" Value="../Assets/ico-bearbeiten.png"/>
+    </Style>
     
     <Style x:Key="DataGridStyle1" TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Foreground" Value="#0A0A0A" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HeadersVisibility" Value="Column" />
         <Setter Property="Margin" Value="0" />
@@ -75,20 +78,25 @@
     <Style x:Key="DataGridCellStyle1" TargetType="{x:Type DataGridCell}">
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Focusable" Value="False"/>
     </Style>
     <Style x:Key="DataGridCellStyle2" TargetType="{x:Type DataGridCell}">
         <Setter Property="HorizontalAlignment" Value="Center" />
-        
+        <Setter Property="Focusable" Value="False"/>
+
     </Style>
     
     <Style x:Key="RoundButton" TargetType="{x:Type Button}" x:Name="button">
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="1"/>
-        <Setter Property="Width" Value="70"/>
-        <Setter Property="Height" Value="70"/>
+        <Setter Property="Margin" Value="15"/>
+        <Setter Property="Width" Value="110"/>
+        <Setter Property="Height" Value="110"/>
         <Setter Property="Focusable" Value="False"/>
+        <Setter Property="IsEnabled" Value="false"/>
         <Setter Property="Template">
+            
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid x:Name="grid">
@@ -103,7 +111,7 @@
                             <Setter TargetName="border" Property="Opacity" Value="0.8"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" TargetName="grid" Value="0.1"/>
+                            <Setter Property="Opacity" TargetName="grid" Value="1"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="border" Property="Background" Value="#A2A2A2">
@@ -135,11 +143,11 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#ED4556"/>
+                <Setter Property="Background" Value="#EF5D6B"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" BorderThickness="4 0 0 0" BorderBrush="#FFF8F2">
+                            <Border Background="{TemplateBinding Background}" BorderThickness="5 0 0 0" BorderBrush="#FFF8F2">
                                 <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                             </Border>
                         </ControlTemplate>
@@ -147,11 +155,12 @@
                 </Setter>
             </Trigger>
             <Trigger Property="IsFocused" Value="True">
-                <Setter Property="Background" Value="#ED4556"/>
+                <Setter Property="Background" Value="#EF5D6B"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" BorderThickness="4 0 0 0" BorderBrush="#FFF8F2">
+                            <Border Background="{TemplateBinding Background}" BorderThickness="8 0 0 0" BorderBrush="#FFF8F2">
                                 <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                             </Border>
                         </ControlTemplate>
@@ -184,6 +193,41 @@
                             Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}"/>
                             <Setter TargetName="Root" Property="Height"
                             Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="EditButton" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Margin" Value="15"/>
+        <Setter Property="Width" Value="45"/>
+        <Setter Property="Height" Value="45"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="grid">
+                        <Border x:Name="border" CornerRadius="3" Padding="1" Margin="2" BorderBrush="Black" BorderThickness="0" Background="LightGray">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center">
+                            </ContentPresenter>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Opacity" Value="0.8"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" TargetName="grid" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#A2A2A2">
+                            </Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

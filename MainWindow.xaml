@@ -11,6 +11,8 @@
         FontSize="18"
         WindowStartupLocation="CenterScreen" Closed="Window_Closed" Loaded="Window_Loaded"
         PreviewLostKeyboardFocus="Window_PreviewLostKeyboardFocus"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Foreground="#0A0A0A"
         >
     <Window.Resources>
         <ResourceDictionary Source="./ResourceDictionarys/StyleDictionary.xaml"/>
@@ -49,13 +51,13 @@
                             <TextBlock Text="Stoppuhr" VerticalAlignment="Center" Margin="10"/>
                         </StackPanel>
                     </Button>
-                    <Button Style="{StaticResource ModeButton}" x:Name="btWürfel" TabIndex="2">
+                    <Button Style="{StaticResource ModeButton}" x:Name="btZiehen" TabIndex="2">
                         <StackPanel Orientation="Horizontal">
                             <Image Style="{StaticResource icoWürfel}" Height="40" Margin="10 0"/>
                             <TextBlock Text="Ziehen" VerticalAlignment="Center" Margin="10"/>
                         </StackPanel>
                     </Button>
-                    <Button Style="{StaticResource ModeButton}" TabIndex="3">
+                    <Button Style="{StaticResource ModeButton}" x:Name="btAnalyse" TabIndex="3">
                         <StackPanel Orientation="Horizontal">
                             <Image Style="{StaticResource icoVideo}" Height="40" Margin="10 0"/>
                             <TextBlock Text="Analyse" VerticalAlignment="Center" Margin="10"/>
@@ -79,43 +81,45 @@
                 <TextBlock x:Name="tbVersion" DockPanel.Dock="Bottom" Text="Version" FontSize="12" FontWeight="Light" Foreground="#F2EFED" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0" />
                 <Separator Height="1" Margin="20 20" Background="#F2EFED" DockPanel.Dock="Bottom"/>
                 <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Border x:Name="bAudio" Margin="10 0" Background="Transparent" CornerRadius="3">
+                    <Border x:Name="bAudio" Margin="5 0" Background="Transparent" CornerRadius="3">
                         <StackPanel Orientation="Horizontal" >
                             <Image Style="{StaticResource icoTon}" Height="40" Margin="5 0 0 0"/>
-                            <CheckBox x:Name="cbAudio" VerticalAlignment="Center" Checked="cbTon_Checked" Unchecked="cbTon_Unchecked" Margin="0 0 10 0"/>
+                            <CheckBox  VerticalAlignment="Center" Checked="cbTon_Checked" Unchecked="cbTon_Unchecked" Margin="0 0 10 0" FocusVisualStyle="{x:Null}" Focusable="False"/>
+                            <CheckBox x:Name="cbAudioShort"  VerticalAlignment="Center" Checked="cbAudioShort_Checked" Unchecked="cbAudioShort_Unchecked" Margin="0 0 10 0" FocusVisualStyle="{x:Null}" Focusable="False" />
                         </StackPanel>
                     </Border>
-                    <Border x:Name="bSingleMode" Margin="10 0" Background="Transparent" CornerRadius="3">
+                    <Border x:Name="bSingleMode" Margin="5 0" Background="Transparent" CornerRadius="3">
                         <StackPanel Orientation="Horizontal" Margin="10 0">
                             <Image Style="{StaticResource icoEins}" Height="40" Margin="5 0 0 0"/>
-                            <CheckBox x:Name="cbSingleMode" VerticalAlignment="Center" Checked="cbSingleMode_Checked" Unchecked="cbSingleMode_Unchecked" Margin="0 0 10 0"/>
+                            <CheckBox x:Name="cbSingleMode" VerticalAlignment="Center" Checked="cbSingleMode_Checked" Unchecked="cbSingleMode_Unchecked" Margin="0 0 10 0" FocusVisualStyle="{x:Null}" Focusable="False" />
                         </StackPanel>
                     </Border>
+                    
                 </StackPanel>
                 <!--- Debug Buttons-->
-                <!--<StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10" >
+                <StackPanel x:Name="debugPannel" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10" Visibility="Hidden">
                     <Button Content="Start" x:Name="btStart" Click="btStart_Click" Width="100" Margin="3" Focusable="False"/>
                     <Button Content="Stop" x:Name="btStop" Click="btStop_Click" Width="100" Margin="3" Focusable="False"/>
                     <Button Content="Modus" x:Name="btModusWechsel" Click="btModusWechsel_Click"  Width="100" Margin="3" Focusable="False"/>
-                </StackPanel>-->
+                </StackPanel>
             </DockPanel>
         </Border>
             
         <!--MainTime-->
-        <Border Grid.Column="1" Grid.ColumnSpan="2" Margin="20 0 20 20" CornerRadius="3" Background="#F2EFED">
+        <Border Grid.Column="1" Grid.ColumnSpan="2" Margin="20 20 20 10" CornerRadius="3" Background="#F2EFED">
             <Grid>
                 <Grid>
                     <ProgressBar Style="{StaticResource pbStyle}" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" x:Name="pbAudioTime" Value="80" />
-                    <TextBlock x:Name="tbAudioTime" Text="" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="12" DockPanel.Dock="Top" Margin="10 0"/>
+                    <TextBlock x:Name="tbAudioTime" Text="" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="12" DockPanel.Dock="Top" Margin="10 0" />
                 </Grid>
-                <TextBlock x:Name="lbMainTime" Text="0:00.00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="300" />
+                <TextBlock x:Name="lbMainTime" Text="0:00.00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="340" Foreground="#0A0A0A" />
                 
             </Grid>
             
         </Border>
 
-        <Border Grid.Row="2" Grid.Column="2" Background="#F2EFED" Margin="20" CornerRadius="3">
-            <DataGrid Style="{StaticResource DataGridStyle1}" x:Name="lvRuns" ColumnHeaderStyle= "{StaticResource DataGridHeaderStyle}" >
+        <Border Grid.Row="2" Grid.Column="2" Background="#F2EFED" Margin="10 10 20 20" CornerRadius="3">
+            <DataGrid Style="{StaticResource DataGridStyle1}" x:Name="lvRuns" ColumnHeaderStyle= "{StaticResource DataGridHeaderStyle}" Focusable="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn CellStyle="{StaticResource DataGridCellStyle1}" Header="Startzeit" Width="*" Binding="{Binding StartTimeString}" FontSize="16"/>
                     <DataGridTextColumn CellStyle="{StaticResource DataGridCellStyle2}" Header="Zeit" Width="150" Binding="{Binding TimeString}"/>
@@ -123,47 +127,10 @@
             </DataGrid>
         </Border>
 
-        <Border  Grid.Row="2" Grid.Column="1" Background="#F2EFED" Margin="20" CornerRadius="3">
-            <StackPanel Margin="5" Orientation="Horizontal" FlowDirection="RightToLeft" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <StackPanel>
-                    <Button  Style="{StaticResource RoundButton}">
-                        <Image Style="{StaticResource imgSTM}"/>
-                    </Button>
-                    <Button  Style="{StaticResource RoundButton}" >
-                        <Image Style="{StaticResource imgSTF}"/>
-                    </Button>
-                </StackPanel>
-                <StackPanel>
-                    <Button  Style="{StaticResource RoundButton}">
-                        <Image Style="{StaticResource imgWTM}"/>
-                    </Button>
-                    <Button  Style="{StaticResource RoundButton}">
-                        <Image Style="{StaticResource imgWTF}"/>
-                    </Button>
-                </StackPanel>
-                <StackPanel>
-                    <Button  Style="{StaticResource RoundButton}" IsEnabled="False">
-                        <Image Style="{StaticResource imgATM}"/>
-                    </Button>
-                    <Button  Style="{StaticResource RoundButton}" IsEnabled="False">
-                        <Image Style="{StaticResource imgATF}"/>
-                    </Button>
-                </StackPanel>
-                <StackPanel>
-                    <Button  Style="{StaticResource RoundButton}" IsEnabled="False">
-                        <Image Style="{StaticResource imgMelder}"/>
-                    </Button>
-                    <Button  Style="{StaticResource RoundButton}" IsEnabled="False">
-                        <Image Style="{StaticResource imgMaschinist}"/>
-                    </Button>
-                </StackPanel>
-                <StackPanel VerticalAlignment="Bottom">
-                    <Button  Style="{StaticResource RoundButton}" IsEnabled="False">
-                        <Image Style="{StaticResource imgGK}"/>
-                    </Button>
-                </StackPanel>
-            </StackPanel>
-        </Border>
+        <Frame Grid.Row="2" Grid.Column="1" Name="SubFrame" Focusable="False" Margin="20 10 10 20" NavigationUIVisibility="Hidden">
+
+        </Frame>
+      
         
        
     </Grid>

@@ -13,6 +13,7 @@
     <None Remove="Assets\ATM.png" />
     <None Remove="Assets\FF-Logo.png" />
     <None Remove="Assets\GK.png" />
+    <None Remove="Assets\ico-bearbeiten.png" />
     <None Remove="Assets\ico-eingekreiste-1.png" />
     <None Remove="Assets\ico-stoppuhr.png" />
     <None Remove="Assets\ico-ton.png" />
@@ -24,6 +25,10 @@
     <None Remove="Assets\STM.png" />
     <None Remove="Assets\WTF.png" />
     <None Remove="Assets\WTM.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\ico-bearbeiten.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,8 +55,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Assets\Angriffsbefehl_LFLB.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Angriffsbefehl_LFLB_kurz.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
