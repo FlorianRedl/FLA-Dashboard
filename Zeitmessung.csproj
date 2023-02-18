@@ -6,12 +6,15 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <AssemblyVersion>1.0</AssemblyVersion>
+    <ApplicationIcon>FLAD.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\ATF.png" />
     <None Remove="Assets\ATM.png" />
+    <None Remove="Assets\FF-Flame.png" />
     <None Remove="Assets\FF-Logo.png" />
+    <None Remove="Assets\Flame1.ico" />
     <None Remove="Assets\GK.png" />
     <None Remove="Assets\ico-bearbeiten.png" />
     <None Remove="Assets\ico-eingekreiste-1.png" />
@@ -28,6 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="FLAD.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\FF-Flame.png" />
+    <Resource Include="Assets\Flame1.ico" />
     <Resource Include="Assets\ico-bearbeiten.png" />
   </ItemGroup>
 

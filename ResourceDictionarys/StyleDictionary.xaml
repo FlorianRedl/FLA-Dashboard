@@ -30,7 +30,7 @@
         <Setter Property="Source" Value="../Assets/GK.png"/>
     </Style>
     <Style TargetType="Image" x:Key="imgFF">
-        <Setter Property="Source" Value="../Assets/FF-Logo.png"/>
+        <Setter Property="Source" Value="../Assets/FF-Flame.png"/>
     </Style>
     <Style TargetType="Image" x:Key="icoSW">
         <Setter Property="Source" Value="../Assets/ico-stoppuhr.png"/>

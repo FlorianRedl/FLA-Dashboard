@@ -13,6 +13,7 @@
         PreviewLostKeyboardFocus="Window_PreviewLostKeyboardFocus"
         PreviewKeyDown="Window_PreviewKeyDown"
         Foreground="#0A0A0A"
+        Icon="/Assets/Flame1.ico"
         >
     <Window.Resources>
         <ResourceDictionary Source="./ResourceDictionarys/StyleDictionary.xaml"/>
@@ -35,8 +36,8 @@
         <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Background="#DF162A">
             <DockPanel>
                 <StackPanel Margin="10 30" Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">
-                    <Image Height="50" Style="{StaticResource imgFF}" Margin="5 0"/>
-                    <StackPanel Margin="5 0">
+                    <Image Height="70" Style="{StaticResource imgFF}" Margin="0" />
+                    <StackPanel Margin="5 0" VerticalAlignment="Center">
                         <TextBlock Text="FF-INZERSDORF" FontSize="18" FontWeight="Normal" Foreground="#F2EFED"/>
                         <TextBlock Text="FLA Dashboard" FontSize="14" FontWeight="Normal" Foreground="#F2EFED"/>
                     </StackPanel>
