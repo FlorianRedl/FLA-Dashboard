@@ -84,8 +84,7 @@
                     <Border x:Name="bAudio" Margin="5 0" Background="Transparent" CornerRadius="3">
                         <StackPanel Orientation="Horizontal" >
                             <Image Style="{StaticResource icoTon}" Height="40" Margin="5 0 0 0"/>
-                            <CheckBox  VerticalAlignment="Center" Checked="cbTon_Checked" Unchecked="cbTon_Unchecked" Margin="0 0 10 0" FocusVisualStyle="{x:Null}" Focusable="False"/>
-                            <CheckBox x:Name="cbAudioShort"  VerticalAlignment="Center" Checked="cbAudioShort_Checked" Unchecked="cbAudioShort_Unchecked" Margin="0 0 10 0" FocusVisualStyle="{x:Null}" Focusable="False" />
+                            <CheckBox  x:Name="cbAudio" VerticalAlignment="Center" Checked="cbTon_Checked" Unchecked="cbTon_Unchecked" Margin="0 0 10 0" FocusVisualStyle="{x:Null}" Focusable="False"/>
                         </StackPanel>
                     </Border>
                     <Border x:Name="bSingleMode" Margin="5 0" Background="Transparent" CornerRadius="3">

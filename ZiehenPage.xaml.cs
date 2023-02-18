@@ -164,7 +164,7 @@ namespace Zeitmessung
 
                 btGK.Visibility = positions.Where(s => s.Name == "GK").First().GetVisibility();
 
-                MainWindow.app.SetFocus("btZiehen");
+                MainWindow.instance.btZiehen.Focus();
                 isFresh = true;
                 isFinished = false;
             }
@@ -210,6 +210,7 @@ namespace Zeitmessung
                 {
                     borderBack.BorderThickness = new Thickness(6);
                     borderBack.BorderBrush = red;
+                    MainWindow.instance.btStopuhr.Focus();
                     isFresh = true;
                 }
                 lbZiehen.Visibility = Visibility.Hidden;
