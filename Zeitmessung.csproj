@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Angriffsbefehl_LFLB_kurz.mp3" />
     <None Remove="Assets\ATF.png" />
     <None Remove="Assets\ATM.png" />
     <None Remove="Assets\FF-Flame.png" />
@@ -18,8 +19,11 @@
     <None Remove="Assets\GK.png" />
     <None Remove="Assets\ico-bearbeiten.png" />
     <None Remove="Assets\ico-eingekreiste-1.png" />
+    <None Remove="Assets\ico-single.png" />
+    <None Remove="Assets\ico-singleNicht.png" />
     <None Remove="Assets\ico-stoppuhr.png" />
     <None Remove="Assets\ico-ton.png" />
+    <None Remove="Assets\ico-tonNicht.png" />
     <None Remove="Assets\ico-video.png" />
     <None Remove="Assets\ico-würfel.png" />
     <None Remove="Assets\Maschinist.png" />
@@ -50,9 +54,11 @@
     <Resource Include="Assets\ATM.png" />
     <Resource Include="Assets\FF-Logo.png" />
     <Resource Include="Assets\GK.png" />
-    <Resource Include="Assets\ico-eingekreiste-1.png" />
+    <Resource Include="Assets\ico-single.png" />
+    <Resource Include="Assets\ico-singleNicht.png" />
     <Resource Include="Assets\ico-stoppuhr.png" />
     <Resource Include="Assets\ico-ton.png" />
+    <Resource Include="Assets\ico-tonNicht.png" />
     <Resource Include="Assets\ico-video.png" />
     <Resource Include="Assets\ico-würfel.png" />
     <Resource Include="Assets\Maschinist.png" />
@@ -73,9 +79,6 @@
 
   <ItemGroup>
     <None Update="Assets\Angriffsbefehl_LFLB.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Angriffsbefehl_LFLB_kurz.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Properties\Settings.settings">

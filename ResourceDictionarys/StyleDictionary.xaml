@@ -234,4 +234,47 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type CheckBox}" x:Key="CheckBoxSingle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Image Height="45" x:Name="checkBoxImage" Source="../Assets/ico-singleNicht.png"></Image>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="checkBoxImage" Property="Opacity" Value="1"/>
+                            <Setter TargetName="checkBoxImage" Property="Source" Value="../Assets/ico-single.png" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="checkBoxImage" Property="Opacity" Value="0.8"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="checkBoxImage" Property="Opacity" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type CheckBox}" x:Key="CheckBoxAudio">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Image Height="45" x:Name="checkBoxImage" Source="../Assets/ico-tonNicht.png"></Image>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="checkBoxImage" Property="Opacity" Value="1"/>
+                            <Setter TargetName="checkBoxImage" Property="Source" Value="../Assets/ico-ton.png" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="checkBoxImage" Property="Opacity" Value="0.8"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="checkBoxImage" Property="Opacity" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
