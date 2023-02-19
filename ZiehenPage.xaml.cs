@@ -13,9 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Zeitmessung.Models;
+using FLAD.Models;
 
-namespace Zeitmessung
+namespace FLAD
 {
     /// <summary>
     /// Interaktionslogik für ZiehenPage.xaml

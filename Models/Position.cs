@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Zeitmessung.Models
+namespace FLAD.Models
 {
     public class Position
     {

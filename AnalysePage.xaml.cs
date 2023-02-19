@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Zeitmessung
+namespace FLAD
 {
     /// <summary>
     /// Interaktionslogik für AnalysePage.xaml

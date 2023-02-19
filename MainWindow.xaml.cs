@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.IO;
 using System.IO.Ports;
 using System.Diagnostics;
-using Zeitmessung.Models;
+using FLAD.Models;
 using System.Windows.Threading;
 using System.Management;
 using System.Windows.Media;
@@ -20,7 +20,7 @@ using WindowsInput.Native;
 using WindowsInput;
 using System.Windows.Media.Animation;
 
-namespace Zeitmessung;
+namespace FLAD;
 
 
 public enum FocusPoint { Stopuhr, Ziehen, Analyse, Audio, SingleMode };
