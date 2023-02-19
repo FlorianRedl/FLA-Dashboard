@@ -115,6 +115,7 @@ public partial class MainWindow : Window
 
                     runs.Add(new Run { Time = stopwatch.Elapsed, StartTime = DateTime.Now });
                     dgRuns.ItemsSource = runs.OrderByDescending(x => x.StartTime).ToList();
+                    dgRuns.ScrollIntoView(runs.LastOrDefault());
                     stopwatch.Reset();
                     activeStatus = Status.Idle;
                 }
@@ -315,19 +316,7 @@ public partial class MainWindow : Window
 
 
 
-    private void Window_Closed(object sender, EventArgs e)
-    {
-        OnPressStart -= MainWindow_OnPressStart;
-        OnPressStop -= MainWindow_OnPressStop;
-        OnPressNext -= MainWindow_OnPressNext;
-
-        if (activePort.IsOpen) 
-        {
-            activePort.DataReceived -= MyPort_DataReceived;
-            activePort.ErrorReceived -= MyPort_ErrorReceived;
-            activePort.Close();
-        } 
-    }
+   
 
 
     //Debug Buttons
@@ -371,26 +360,30 @@ public partial class MainWindow : Window
             elementWithFocus.MoveFocus(tRequest);
         }
     }
-    //private void cbAudioShort_Checked(object sender, RoutedEventArgs e)
-    //{
-    //    mediaPlayer.Close();
-    //    mediaPlayer.Open(new Uri("Assets/Angriffsbefehl_LFLB_kurz.mp3", UriKind.Relative));
-    //}
-
-    //private void cbAudioShort_Unchecked(object sender, RoutedEventArgs e)
-    //{
-    //    mediaPlayer.Close();
-    //    mediaPlayer.Open(new Uri("Assets/Angriffsbefehl_LFLB.mp3", UriKind.Relative));
-    //}
+    
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         btStopuhr.Focus();
         SetupComboboxComPorts();
-        DataLoader.GetLastRuns(ref runs);
+        DataLoader.LoadAllRuns(ref runs);
         dgRuns.ItemsSource = runs.OrderByDescending(x => x.StartTime).ToList();
 
     }
+    private void Window_Closed(object sender, EventArgs e)
+    {
+        DataLoader.SaveAllRuns(ref runs);
 
+        OnPressStart -= MainWindow_OnPressStart;
+        OnPressStop -= MainWindow_OnPressStop;
+        OnPressNext -= MainWindow_OnPressNext;
+
+        if (activePort.IsOpen)
+        {
+            activePort.DataReceived -= MyPort_DataReceived;
+            activePort.ErrorReceived -= MyPort_ErrorReceived;
+            activePort.Close();
+        }
+    }
     private void Window_PreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
     {
         var button = e.NewFocus as Button;

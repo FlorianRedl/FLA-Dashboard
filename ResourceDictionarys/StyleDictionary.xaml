@@ -45,7 +45,7 @@
     <Style TargetType="Image" x:Key="icobearbeiten">
         <Setter Property="Source" Value="../Assets/ico-bearbeiten.png"/>
     </Style>
-    
+
     <Style x:Key="DataGridStyle1" TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="#0A0A0A" />
@@ -59,24 +59,29 @@
         <Setter Property="CanUserReorderColumns" Value="false" />
         <Setter Property="GridLinesVisibility" Value="None" />
         <Setter Property="ColumnWidth"  Value="*" />
-        <Setter Property="FontSize"  Value="28" />
+        <Setter Property="FontSize"  Value="26"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
         <Setter Property="AlternatingRowBackground" Value="Transparent" />
-        <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
     </Style>
+
     <Style x:Key="DataGridHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Foreground" Value="#F2EFED" />
+        <Setter Property="Height" Value="40" />
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
+    
     
     <Style x:Key="DataGridCellStyle1" TargetType="{x:Type DataGridCell}">
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Focusable" Value="False"/>
+        <Setter Property="FontSize" Value="20" />
     </Style>
     <Style x:Key="DataGridCellStyle2" TargetType="{x:Type DataGridCell}">
         <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="30" />
         <Setter Property="Focusable" Value="False"/>
 
     </Style>
@@ -234,7 +239,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
-                    <Image Height="45" x:Name="checkBoxImage" Source="../Assets/ico-singleNicht.png"></Image>
+                    <Image Height="40" x:Name="checkBoxImage" Source="../Assets/ico-singleNicht.png"></Image>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="checkBoxImage" Property="Opacity" Value="1"/>
@@ -255,7 +260,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
-                    <Image Height="45" x:Name="checkBoxImage" Source="../Assets/ico-tonNicht.png"></Image>
+                    <Image Height="40" x:Name="checkBoxImage" Source="../Assets/ico-tonNicht.png"></Image>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="checkBoxImage" Property="Opacity" Value="1"/>

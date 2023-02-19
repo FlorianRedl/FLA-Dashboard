@@ -101,20 +101,26 @@
                     <ProgressBar Style="{StaticResource pbStyle}" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" x:Name="pbAudioTime" Value="80" />
                     <TextBlock x:Name="tbAudioTime" Text="" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="12" DockPanel.Dock="Top" Margin="10 0" />
                 </Grid>
-                <TextBlock x:Name="lbMainTime" Text="0:00.00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="340" Foreground="#0A0A0A" />
+                <TextBlock x:Name="lbMainTime" Text="0:00.00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="340" Foreground="#0A0A0A"  />
                 
             </Grid>
             
         </Border>
 
-        <Border Grid.Row="2" Grid.Column="2" Background="#F2EFED" Margin="10 10 20 20" CornerRadius="3">
-            <DataGrid Style="{StaticResource DataGridStyle1}" x:Name="dgRuns" ColumnHeaderStyle= "{StaticResource DataGridHeaderStyle}" Focusable="False">
+        <Grid Grid.Row="2" Grid.Column="2"  Margin="10 10 20 20" >
+            <Border Background="#DF162A"  CornerRadius="3 3 0 0" Height="40" VerticalAlignment="Top" Panel.ZIndex="1">
+            </Border>
+
+            <Border Background="#F2EFED"  CornerRadius="3" Panel.ZIndex="0">
+            </Border>
+            <DataGrid Style="{StaticResource DataGridStyle1}" x:Name="dgRuns" ColumnHeaderStyle= "{StaticResource DataGridHeaderStyle}" Panel.ZIndex="1">
                 <DataGrid.Columns>
-                    <DataGridTextColumn CellStyle="{StaticResource DataGridCellStyle1}" Header="Startzeit" Width="*" Binding="{Binding StartTimeString}" FontSize="16"/>
-                    <DataGridTextColumn CellStyle="{StaticResource DataGridCellStyle2}" Header="Zeit" Width="150" Binding="{Binding TimeString}"/>
+                    <DataGridTextColumn CellStyle="{StaticResource DataGridCellStyle1}" Header="Startzeit" Width="*" Binding="{Binding StartTimeString}"/>
+                    <DataGridTextColumn CellStyle="{StaticResource DataGridCellStyle2}" Header="Zeit" Width="*" Binding="{Binding TimeString}"/>
                 </DataGrid.Columns>
             </DataGrid>
-        </Border>
+        </Grid>
+
 
         <Frame Grid.Row="2" Grid.Column="1" Name="SubFrame" Focusable="False" Margin="20 10 10 20" NavigationUIVisibility="Hidden">
 

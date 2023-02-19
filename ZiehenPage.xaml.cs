@@ -107,7 +107,7 @@ namespace Zeitmessung
 
         private void btEdit_Click(object sender, RoutedEventArgs e)
         {
-            var bgreen = new BrushConverter().ConvertFromString("#C9EBC2");
+            var bgreen = new BrushConverter().ConvertFromString("#76CD65");
             var green = bgreen as SolidColorBrush;
             lbZiehen.Visibility = Visibility.Hidden;
 
@@ -115,7 +115,7 @@ namespace Zeitmessung
 
             if(isEditMode)
             { 
-                borderBack.BorderThickness = new Thickness(8);
+                borderBack.BorderThickness = new Thickness(5);
                 borderBack.BorderBrush = green;
                 btSTM.IsEnabled = true;
                 btSTF.IsEnabled = true;
@@ -210,7 +210,7 @@ namespace Zeitmessung
                 
                 if (notDrawnPositions.Count == 1)
                 {
-                    borderBack.BorderThickness = new Thickness(6);
+                    borderBack.BorderThickness = new Thickness(5);
                     borderBack.BorderBrush = red;
                     MainWindow.instance.btStopuhr.Focus();
                     isFresh = true;

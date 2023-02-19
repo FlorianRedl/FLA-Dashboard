@@ -14,15 +14,11 @@
 
     <Grid>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <Border Background="#DF162A" Height="40" VerticalAlignment="Top" CornerRadius=" 3 3 0 0" Panel.ZIndex="1">
+            <TextBlock Text="Ziehen" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="26" Foreground="#F2EFED"/>
+        </Border>
 
-
-        <Border x:Name="borderBack" Grid.Row="0" Grid.RowSpan="2" Background="#F2EFED"  CornerRadius="3" BorderBrush="#ED4556" BorderThickness="0">
+        <Border x:Name="borderBack" Background="#F2EFED" CornerRadius="0 0 3 3" BorderBrush="#ED4556" BorderThickness="0" Margin="0 40 0 0" Panel.ZIndex="0">
             <StackPanel  Margin="5" Orientation="Horizontal" FlowDirection="RightToLeft" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <StackPanel>
                     <StackPanel  Margin="5" Orientation="Horizontal" FlowDirection="RightToLeft" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -69,7 +65,7 @@
             </StackPanel>
             
         </Border>
-        <Button x:Name="btEdit" Style="{StaticResource EditButton}" Grid.Row="0" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btEdit_Click" Focusable="false"  >
+        <Button x:Name="btEdit" Style="{StaticResource EditButton}" Grid.Row="0" Margin="10 50 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btEdit_Click" Focusable="false"  >
             <Image  Style="{StaticResource icobearbeiten}"/>
         </Button>
 
