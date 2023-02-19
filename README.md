@@ -17,7 +17,7 @@ Um das FLAD optimal zu nutzen benötigt man neben der **FLAD-Applikation** noch 
 - Auslosen der Taktischen Zeichen
 - Externe Steuerung über USB-Controller
 - Speichern der Zeiten (Local XML)
-- Debug Modus (Taste F5)
+- Debug Modus (F5)
 
 ![Hauptansicht](Assets/Screenshots/FLAD1.PNG)
 
