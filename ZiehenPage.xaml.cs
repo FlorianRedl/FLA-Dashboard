@@ -29,21 +29,23 @@ namespace Zeitmessung
         public bool isFinished { get; set; }
 
         public static ZiehenPage instance;
-        List<Position> positions= new List<Position>();
+        List<Position> positions;
         public ZiehenPage()
         {
             instance = this;
             InitializeComponent();
-
-            positions.Add(new Position(0, "STM"));
-            positions.Add(new Position(1, "STF"));
-            positions.Add(new Position(2, "WTM"));
-            positions.Add(new Position(3, "WTF"));
-            positions.Add(new Position(4, "ATM"));
-            positions.Add(new Position(5, "ATF"));
-            positions.Add(new Position(6, "Maschinist"));
-            positions.Add(new Position(7, "Melder"));
-            positions.Add(new Position(8, "GK"));
+            positions = new List<Position>
+            {
+                new Position(0, "STM"),
+                new Position(1, "STF"),
+                new Position(2, "WTM"),
+                new Position(3, "WTF"),
+                new Position(4, "ATM"),
+                new Position(5, "ATF"),
+                new Position(6, "Maschinist"),
+                new Position(7, "Melder"),
+                new Position(8, "GK")
+            };
         }
 
        

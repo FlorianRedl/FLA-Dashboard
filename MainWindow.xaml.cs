@@ -18,6 +18,7 @@ using System.Reflection;
 using System.Media;
 using System.Threading;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 
 namespace Zeitmessung;
 
@@ -30,7 +31,7 @@ public partial class MainWindow : Window
 
     Stopwatch stopwatch = new();
     List<Run> runs = new();
-    SerialPort activePort = new();
+    SerialPort activePort;
     public enum Status { Idle, AudioPlaying, StopTime, DisplayLastTime };
     Status activeStatus;
 
@@ -39,6 +40,8 @@ public partial class MainWindow : Window
     public event Action OnPressStart;
     public event Action OnPressStop;
     public event Action OnPressNext;
+    public event Action OnDeviceCheckOk;
+    private bool isDeviceCheckOk = false;
 
     private MediaPlayer mediaPlayer = new MediaPlayer();
 
@@ -65,20 +68,13 @@ public partial class MainWindow : Window
         OnPressStart += MainWindow_OnPressStart;
         OnPressStop += MainWindow_OnPressStop;
         OnPressNext += MainWindow_OnPressNext;
+        OnDeviceCheckOk += MainWindow_OnDeviceCheckOk;
         //Media
         mediaPlayer.Open(new Uri("Assets/Angriffsbefehl_LFLB.mp3", UriKind.Relative));
         mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
 
 
-        List<string> list = new();
-        list = SerialPort.GetPortNames().ToList();
-        cbComPorts.ItemsSource = list;
 
-        activePort.BaudRate = 9600;
-        activePort.ReadTimeout = 500;
-        activePort.WriteTimeout = 500;
-        activePort.DataReceived += MyPort_DataReceived;
-        activePort.ErrorReceived += MyPort_ErrorReceived;
 
 
         DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.Normal);
@@ -87,6 +83,8 @@ public partial class MainWindow : Window
         timer.Start();
 
     }
+
+    
 
     private void MediaPlayer_MediaEnded(object? sender, EventArgs e)
     {
@@ -114,12 +112,13 @@ public partial class MainWindow : Window
                 }
                 if (activeStatus == Status.DisplayLastTime)
                 {
+
                     runs.Add(new Run { Time = stopwatch.Elapsed, StartTime = DateTime.Now });
-                    lvRuns.ItemsSource = runs.OrderByDescending(x => x.StartTime).ToList();
+                    dgRuns.ItemsSource = runs.OrderByDescending(x => x.StartTime).ToList();
                     stopwatch.Reset();
                     activeStatus = Status.Idle;
                 }
-                
+
                 break;
             case FocusPoint.Ziehen:
                 ZiehenPage.instance.GetPosition();
@@ -136,7 +135,7 @@ public partial class MainWindow : Window
             default:
                 break;
         }
-        
+
     }
     private void MainWindow_OnPressStop()
     {
@@ -150,15 +149,24 @@ public partial class MainWindow : Window
         {
             activeStatus = Status.DisplayLastTime;
             stopwatch.Stop();
-            
+
         }
 
-        
+
     }
     private void MainWindow_OnPressNext()
     {
         NextFocus();
     }
+    private void MainWindow_OnDeviceCheckOk()
+    {
+        //Debug.WriteLine("MainWindow_OnDeviceCheckOk: " + Thread.CurrentThread.ManagedThreadId);
+        isDeviceCheckOk = true;
+        Dispatcher.Invoke(() => { lbStatus.Text = "verbunden"; });
+    }
+
+
+    
 
     private void PlayAudio()
     {
@@ -171,18 +179,12 @@ public partial class MainWindow : Window
     {
         activeStatus = Status.StopTime;
         if (stopwatch.IsRunning) stopwatch.Stop();
-        if (stopwatch.Elapsed.TotalSeconds > 0)
-        {
-            runs.Add(new Run { Time = stopwatch.Elapsed });
-            lvRuns.Items.Refresh();
-        }
-
         stopwatch.Reset();
         stopwatch.Start();
     }
 
-   
-  
+
+
     private void timer_Tick(object sender, EventArgs e)
     {
         TimeSpan timeTaken = stopwatch.Elapsed;
@@ -190,7 +192,7 @@ public partial class MainWindow : Window
         lbMainTime.Text = foo;
 
         //Audio
-        if (mediaPlayer.Source!= null && activeStatus == Status.AudioPlaying)
+        if (mediaPlayer.Source != null && activeStatus == Status.AudioPlaying)
         {
             tbAudioTime.Text = String.Format("{0} / {1}", mediaPlayer.Position.ToString(@"mm\:ss"), mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss"));
             pbAudioTime.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalMilliseconds;
@@ -200,14 +202,15 @@ public partial class MainWindow : Window
         {
             tbAudioTime.Text = "";
             pbAudioTime.Value = 0;
-        } 
+        }
     }
 
     private void MyPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
     {
-        Thread.Sleep(50);
+        
+        Thread.Sleep(25);
         var port = sender as SerialPort;
-        var inputString = port.ReadLine().Replace("\r\n", "").Replace("\r", "").Replace("\n", ""); ;
+        var inputString = port.ReadLine().Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
 
         Debug.WriteLine(inputString);
         switch (inputString)
@@ -221,56 +224,96 @@ public partial class MainWindow : Window
             case "NEXT":
                 Dispatcher.Invoke(() => OnPressNext?.Invoke());
                 break;
+            case "CheckOk":
+                //Debug.WriteLine("MyPort_DataReceived: " + Thread.CurrentThread.ManagedThreadId);
+                OnDeviceCheckOk?.Invoke();
+                break;
             default:
                 break;
         }
     }
-    
-
-
-    private void cbComPorts_DropDownClosed(object sender, EventArgs e)
-    { 
-    
-        var selectedItem = (sender as ComboBox)?.SelectedItem;
-        
-        if (selectedItem == null) return;
-        lbStatus.Text = "";
-        if (CheckComPort(selectedItem.ToString()))
-        {
-            lbStatus.Text = "verbunden";
-            Properties.Settings.Default.ComPort = selectedItem.ToString();
-            Properties.Settings.Default.Save();
-        }
-        else
-        {
-            lbStatus.Text = "fehler";
-        }
-        
-
-    }
-
     private void MyPort_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
     {
         throw new NotImplementedException();
     }
 
-    private bool CheckComPort(string? portName)
+
+    private void cbComPorts_DropDownClosed(object sender, EventArgs e)
     {
-        
-        if (portName == null) return false;
+
+        var selectedItem = (sender as ComboBox)?.SelectedItem;
+
+        if (selectedItem == null) return;
+
+        ConnectComPort(selectedItem.ToString());
+        Properties.Settings.Default.ComPort = selectedItem.ToString();
+        Properties.Settings.Default.Save();
+
+
+    }
+
+    private void SetupComboboxComPorts()
+    {
+        cbComPorts.ItemsSource = SerialPort.GetPortNames().ToList();
+        var lastComPort = Properties.Settings.Default.ComPort;
+        if (string.IsNullOrEmpty(lastComPort)) return;
+        cbComPorts.SelectedItem = lastComPort;
+        ConnectComPort(lastComPort);
+
+    }
+    private async void ConnectComPort(string? portName)
+    {
+        Debug.WriteLine("ConnectComPort: " + Thread.CurrentThread.ManagedThreadId);
+        if (portName == null) return;
+        isDeviceCheckOk = false;
+        lbStatus.Text = "";
+        if (activePort == null)
+        {
+            activePort = new SerialPort();
+            activePort.BaudRate = 9600;
+            activePort.ReadTimeout = 500;
+            activePort.WriteTimeout = 500;
+            activePort.DataReceived += MyPort_DataReceived;
+            activePort.ErrorReceived += MyPort_ErrorReceived;
+            activePort.PinChanged += (object sender, SerialPinChangedEventArgs e)=> { };
+            activePort.Disposed += (object? sender, EventArgs e)=> { };
+        }
         try
         {
+            lbStatus.Text = "...";
             if (activePort.IsOpen) activePort.Close();
             activePort.PortName = portName;
-            activePort.Open();               
-            return true;
+           
+            activePort.Open();
+            activePort.WriteLine("CheckDevice");
+            
+            await CheckConnection();
+            return;
         }
         catch (Exception ex)
         {
-            return false;
+            lbStatus.Text = "fehler!";
+            lbStatus.ToolTip = ex.Message;
+            return;
         }
-        
+
+
     }
+
+   
+
+    private async Task CheckConnection()
+    {
+        await Task.Delay(2000);
+        //Debug.WriteLine("TASK: " + Thread.CurrentThread.ManagedThreadId);
+        if (isDeviceCheckOk) return;
+        
+        lbStatus.Text = "fehler!";
+        lbStatus.ToolTip = "falsches Gerät";
+
+    }
+
+
 
     private void Window_Closed(object sender, EventArgs e)
     {
@@ -341,21 +384,10 @@ public partial class MainWindow : Window
     //}
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-        Keyboard.Focus(btStopuhr);
-        var comPort = Properties.Settings.Default.ComPort;
-        if (!string.IsNullOrEmpty(comPort))
-        {
-            if (CheckComPort(comPort))
-            {
-                lbStatus.Text = "verbunden";
-            }
-            else
-            {
-                lbStatus.Text = "fehler";
-            }
-            cbComPorts.SelectedItem = comPort;
-        }
-
+        btStopuhr.Focus();
+        SetupComboboxComPorts();
+        DataLoader.GetLastRuns(ref runs);
+        dgRuns.ItemsSource = runs.OrderByDescending(x => x.StartTime).ToList();
 
     }
 

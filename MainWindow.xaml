@@ -108,7 +108,7 @@
         </Border>
 
         <Border Grid.Row="2" Grid.Column="2" Background="#F2EFED" Margin="10 10 20 20" CornerRadius="3">
-            <DataGrid Style="{StaticResource DataGridStyle1}" x:Name="lvRuns" ColumnHeaderStyle= "{StaticResource DataGridHeaderStyle}" Focusable="False">
+            <DataGrid Style="{StaticResource DataGridStyle1}" x:Name="dgRuns" ColumnHeaderStyle= "{StaticResource DataGridHeaderStyle}" Focusable="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn CellStyle="{StaticResource DataGridCellStyle1}" Header="Startzeit" Width="*" Binding="{Binding StartTimeString}" FontSize="16"/>
                     <DataGridTextColumn CellStyle="{StaticResource DataGridCellStyle2}" Header="Zeit" Width="150" Binding="{Binding TimeString}"/>

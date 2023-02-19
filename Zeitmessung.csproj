@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <AssemblyVersion>1.0</AssemblyVersion>
-    <ApplicationIcon>FLAD.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\FLAD.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,10 +32,6 @@
     <None Remove="Assets\STM.png" />
     <None Remove="Assets\WTF.png" />
     <None Remove="Assets\WTM.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="FLAD.ico" />
   </ItemGroup>
 
   <ItemGroup>

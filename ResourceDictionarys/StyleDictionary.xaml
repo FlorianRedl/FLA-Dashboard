@@ -41,12 +41,7 @@
     <Style TargetType="Image" x:Key="icoWürfel">
         <Setter Property="Source" Value="../Assets/ico-würfel.png"/>
     </Style>
-    <Style TargetType="Image" x:Key="icoTon">
-        <Setter Property="Source" Value="../Assets/ico-ton.png"/>
-    </Style>
-    <Style TargetType="Image" x:Key="icoEins">
-        <Setter Property="Source" Value="../Assets/ico-eingekreiste-1.png"/>
-    </Style>
+    
     <Style TargetType="Image" x:Key="icobearbeiten">
         <Setter Property="Source" Value="../Assets/ico-bearbeiten.png"/>
     </Style>
@@ -246,7 +241,7 @@
                             <Setter TargetName="checkBoxImage" Property="Source" Value="../Assets/ico-single.png" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter TargetName="checkBoxImage" Property="Opacity" Value="0.8"/>
+                            <Setter TargetName="checkBoxImage" Property="Opacity" Value="0.5"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="checkBoxImage" Property="Opacity" Value="1"/>
@@ -267,7 +262,7 @@
                             <Setter TargetName="checkBoxImage" Property="Source" Value="../Assets/ico-ton.png" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter TargetName="checkBoxImage" Property="Opacity" Value="0.8"/>
+                            <Setter TargetName="checkBoxImage" Property="Opacity" Value="0.5"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="checkBoxImage" Property="Opacity" Value="1"/>
