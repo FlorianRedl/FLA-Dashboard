@@ -15,10 +15,10 @@ using System.Windows.Threading;
 using System.Management;
 using System.Windows.Media;
 using System.Reflection;
-using System.Media;
 using System.Threading;
-using System.Collections.ObjectModel;
-using System.Diagnostics.Contracts;
+using WindowsInput.Native;
+using WindowsInput;
+using System.Windows.Media.Animation;
 
 namespace Zeitmessung;
 
@@ -32,6 +32,7 @@ public partial class MainWindow : Window
     Stopwatch stopwatch = new();
     List<Run> runs = new();
     SerialPort activePort;
+    InputSimulator keySim = new();
     public enum Status { Idle, AudioPlaying, StopTime, DisplayLastTime };
     Status activeStatus;
 
@@ -48,7 +49,7 @@ public partial class MainWindow : Window
     //Settings
     public bool IsAudioEnabled { get; set; }
     public bool IsSingleMode { get; set; }
-
+    public bool IsVideoEnabled { get; set; }
     public bool IsZiehenEdit { get; set; }
 
     //Save Settings
@@ -74,9 +75,6 @@ public partial class MainWindow : Window
         mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
 
 
-
-
-
         DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.Normal);
         timer.Interval = TimeSpan.FromMilliseconds(25);
         timer.Tick += timer_Tick;
@@ -84,7 +82,6 @@ public partial class MainWindow : Window
 
     }
 
-    
 
     private void MediaPlayer_MediaEnded(object? sender, EventArgs e)
     {
@@ -98,8 +95,7 @@ public partial class MainWindow : Window
             case FocusPoint.Stopuhr:
                 if (activeStatus == Status.StopTime && IsSingleMode)
                 {
-                    activeStatus = Status.DisplayLastTime;
-                    stopwatch.Stop();
+                    StopStopwatch();
                     return;
                 }
                 if (activeStatus == Status.Idle && IsAudioEnabled)
@@ -114,6 +110,8 @@ public partial class MainWindow : Window
                 {
 
                     runs.Add(new Run { Time = stopwatch.Elapsed, StartTime = DateTime.Now });
+                    //DateTime last = DateTime.Today.AddDays(- 6);
+                    //var t = runs.Where(s => s.StartTime >= last).OrderByDescending(x => x.StartTime).ToList();
                     dgRuns.ItemsSource = runs.OrderByDescending(x => x.StartTime).ToList();
                     dgRuns.ScrollIntoView(runs.LastOrDefault());
                     stopwatch.Reset();
@@ -142,14 +140,17 @@ public partial class MainWindow : Window
     {
         if (activeStatus == Status.AudioPlaying)
         {
+            if (IsVideoEnabled)
+            {
+                keySim.Keyboard.KeyDown(VirtualKeyCode.VK_B).Sleep(25).KeyUp(VirtualKeyCode.VK_B);
+            }
             mediaPlayer.Stop();
             activeStatus = Status.Idle;
             return;
         }
         if (activeStatus == Status.StopTime)
         {
-            activeStatus = Status.DisplayLastTime;
-            stopwatch.Stop();
+            StopStopwatch();
 
         }
 
@@ -167,10 +168,12 @@ public partial class MainWindow : Window
     }
 
 
-    
-
     private void PlayAudio()
     {
+        if (IsVideoEnabled)
+        {
+            keySim.Keyboard.KeyDown(VirtualKeyCode.VK_A).Sleep(25).KeyUp(VirtualKeyCode.VK_A);
+        }
         activeStatus = Status.AudioPlaying;
         mediaPlayer.Stop();
         mediaPlayer.Play();
@@ -183,7 +186,15 @@ public partial class MainWindow : Window
         stopwatch.Reset();
         stopwatch.Start();
     }
-
+    private void StopStopwatch()
+    {
+        activeStatus = Status.DisplayLastTime;
+        stopwatch.Stop();
+        if (IsVideoEnabled)
+        {
+            keySim.Keyboard.KeyDown(VirtualKeyCode.VK_B).Sleep(25).KeyUp(VirtualKeyCode.VK_B);
+        }
+    }
 
 
     private void timer_Tick(object sender, EventArgs e)
@@ -337,19 +348,32 @@ public partial class MainWindow : Window
     private void cbTon_Checked(object sender, RoutedEventArgs e)
     {
         IsAudioEnabled = true;
+        cbVideo.IsEnabled = true;
     }
     private void cbTon_Unchecked(object sender, RoutedEventArgs e)
     {
         IsAudioEnabled = false;
+        cbVideo.IsEnabled = false;
+        cbVideo.IsChecked = false;
     }
     private void cbSingleMode_Checked(object sender, RoutedEventArgs e)
     {
         IsSingleMode = true;
+        
     }
 
     private void cbSingleMode_Unchecked(object sender, RoutedEventArgs e)
     {
         IsSingleMode = false;
+    }
+    private void cbVideo_Checked(object sender, RoutedEventArgs e)
+    {
+        IsVideoEnabled = true;
+    }
+
+    private void cbVideo_Unchecked(object sender, RoutedEventArgs e)
+    {
+        IsVideoEnabled = false;
     }
     private void NextFocus()
     {
@@ -434,6 +458,7 @@ public partial class MainWindow : Window
         }
     }
 
+    
 }
 
 

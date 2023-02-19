@@ -60,7 +60,7 @@
                     </Button>
                     <Button Style="{StaticResource ModeButton}" x:Name="btAnalyse" TabIndex="3">
                         <StackPanel Orientation="Horizontal">
-                            <Image Style="{StaticResource icoVideo}" Height="40" Margin="10 0"/>
+                            <Image Style="{StaticResource icoAnalyse}" Height="40" Margin="10 0"/>
                             <TextBlock Text="Analyse" VerticalAlignment="Center" Margin="10"/>
                         </StackPanel>
                     </Button>
@@ -82,8 +82,9 @@
                 <TextBlock x:Name="tbVersion" DockPanel.Dock="Bottom" Text="Version" FontSize="12" FontWeight="Light" Foreground="#F2EFED" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0" />
                 <Separator Height="1" Margin="20 20" Background="#F2EFED" DockPanel.Dock="Bottom"/>
                 <StackPanel  VerticalAlignment="Bottom"  DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <CheckBox x:Name="cbAudio" Style="{StaticResource CheckBoxAudio}" VerticalAlignment="Center" Checked="cbTon_Checked" Unchecked="cbTon_Unchecked" Margin="20 0" FocusVisualStyle="{x:Null}" Focusable="False"/>
-                    <CheckBox x:Name="cbSingleMode" Style="{StaticResource CheckBoxSingle}" VerticalAlignment="Center" Checked="cbSingleMode_Checked" Unchecked="cbSingleMode_Unchecked" Margin="20 0" FocusVisualStyle="{x:Null}" Focusable="False" />
+                    <CheckBox x:Name="cbAudio" Style="{StaticResource CheckBoxAudio}" VerticalAlignment="Center" Checked="cbTon_Checked" Unchecked="cbTon_Unchecked" Margin="10 0" FocusVisualStyle="{x:Null}" Focusable="False"/>
+                    <CheckBox x:Name="cbVideo" IsEnabled="False" Style="{StaticResource CheckBoxVideo}" VerticalAlignment="Center" Checked="cbVideo_Checked" Unchecked="cbVideo_Unchecked" Margin="10 0" FocusVisualStyle="{x:Null}" Focusable="False" />
+                    <CheckBox x:Name="cbSingleMode" Style="{StaticResource CheckBoxSingle}" VerticalAlignment="Center" Checked="cbSingleMode_Checked" Unchecked="cbSingleMode_Unchecked" Margin="10 0" FocusVisualStyle="{x:Null}" Focusable="False" />
                 </StackPanel>
                 <!--- Debug Buttons-->
                 <StackPanel x:Name="debugPannel" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10" Visibility="Hidden">

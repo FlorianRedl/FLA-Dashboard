@@ -17,6 +17,7 @@
     <None Remove="Assets\FF-Logo.png" />
     <None Remove="Assets\Flame1.ico" />
     <None Remove="Assets\GK.png" />
+    <None Remove="Assets\ico-analyse.png" />
     <None Remove="Assets\ico-bearbeiten.png" />
     <None Remove="Assets\ico-eingekreiste-1.png" />
     <None Remove="Assets\ico-single.png" />
@@ -25,6 +26,7 @@
     <None Remove="Assets\ico-ton.png" />
     <None Remove="Assets\ico-tonNicht.png" />
     <None Remove="Assets\ico-video.png" />
+    <None Remove="Assets\ico-videoNicht.png" />
     <None Remove="Assets\ico-würfel.png" />
     <None Remove="Assets\Maschinist.png" />
     <None Remove="Assets\Melder.png" />
@@ -37,10 +39,12 @@
   <ItemGroup>
     <Resource Include="Assets\FF-Flame.png" />
     <Resource Include="Assets\Flame1.ico" />
+    <Resource Include="Assets\ico-analyse.png" />
     <Resource Include="Assets\ico-bearbeiten.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="InputSimulator" Version="1.0.4" />
     <PackageReference Include="System.IO.Ports" Version="7.0.0" />
     <PackageReference Include="System.Management" Version="7.0.0" />
   </ItemGroup>
@@ -56,6 +60,7 @@
     <Resource Include="Assets\ico-ton.png" />
     <Resource Include="Assets\ico-tonNicht.png" />
     <Resource Include="Assets\ico-video.png" />
+    <Resource Include="Assets\ico-videoNicht.png" />
     <Resource Include="Assets\ico-würfel.png" />
     <Resource Include="Assets\Maschinist.png" />
     <Resource Include="Assets\Melder.png" />
