@@ -58,12 +58,12 @@
                             <TextBlock Text="Ziehen" VerticalAlignment="Center" Margin="10"/>
                         </StackPanel>
                     </Button>
-                    <Button Style="{StaticResource ModeButton}" x:Name="btAnalyse" TabIndex="3">
+                    <!--<Button Style="{StaticResource ModeButton}" x:Name="btAnalyse" TabIndex="3">
                         <StackPanel Orientation="Horizontal">
                             <Image Style="{StaticResource icoAnalyse}" Height="40" Margin="10 0"/>
                             <TextBlock Text="Analyse" VerticalAlignment="Center" Margin="10"/>
                         </StackPanel>
-                    </Button>
+                    </Button>-->
                 </StackPanel>
                 
                 <!--- Main Menu Settings-->

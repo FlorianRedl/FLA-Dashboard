@@ -327,9 +327,6 @@ public partial class MainWindow : Window
 
 
 
-   
-
-
     //Debug Buttons
     private void btStart_Click(object sender, RoutedEventArgs e)
     {

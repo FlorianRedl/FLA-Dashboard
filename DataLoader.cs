@@ -46,7 +46,8 @@ public static class DataLoader
         }
         catch (Exception ex)
         {
-            MessageBox.Show("LoadXmlFile  " + ex.ToString()); 
+            MessageBox.Show("LoadXmlFile  " + ex.ToString());
+            throw;
         }
     }
 
