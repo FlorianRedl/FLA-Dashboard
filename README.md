@@ -1,4 +1,5 @@
 # FF-Inzersdorf-FLA-Dashboard
 
 
-TEST
+
+![Main View](https://raw.githubusercontent.com/FlorianRedl/Cardprint/master/Assets/Screenshot_MainView.png)
