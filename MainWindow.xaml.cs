@@ -229,6 +229,7 @@ public partial class MainWindow : Window
         {
             case "START":
                 Dispatcher.Invoke(() => OnPressStart?.Invoke());
+                OnDeviceCheckOk?.Invoke();
                 break;
             case "STOP":
                 Dispatcher.Invoke(() => OnPressStop?.Invoke());
@@ -257,7 +258,7 @@ public partial class MainWindow : Window
 
         if (selectedItem == null) return;
 
-        ConnectComPort(selectedItem.ToString());
+        ConnectToComPort(selectedItem.ToString());
         Properties.Settings.Default.ComPort = selectedItem.ToString();
         Properties.Settings.Default.Save();
 
@@ -270,12 +271,12 @@ public partial class MainWindow : Window
         var lastComPort = Properties.Settings.Default.ComPort;
         if (string.IsNullOrEmpty(lastComPort)) return;
         cbComPorts.SelectedItem = lastComPort;
-        ConnectComPort(lastComPort);
+        ConnectToComPort(lastComPort);
 
     }
-    private async void ConnectComPort(string? portName)
+    private async void ConnectToComPort(string? portName)
     {
-        Debug.WriteLine("ConnectComPort: " + Thread.CurrentThread.ManagedThreadId);
+        
         if (portName == null) return;
         isDeviceCheckOk = false;
         lbStatus.Text = "";
@@ -295,10 +296,9 @@ public partial class MainWindow : Window
             lbStatus.Text = "...";
             if (activePort.IsOpen) activePort.Close();
             activePort.PortName = portName;
-           
             activePort.Open();
             activePort.WriteLine("CheckDevice");
-            
+
             await CheckConnection();
             return;
         }
@@ -312,7 +312,6 @@ public partial class MainWindow : Window
 
     }
 
-   
 
     private async Task CheckConnection()
     {
@@ -324,7 +323,6 @@ public partial class MainWindow : Window
         lbStatus.ToolTip = "falsches Gerät";
 
     }
-
 
 
     //Debug Buttons
@@ -392,7 +390,7 @@ public partial class MainWindow : Window
     }
     private void Window_Closed(object sender, EventArgs e)
     {
-        DataLoader.SaveAllRuns(ref runs);
+        DataLoader.SaveAllRuns(ref runs);   
 
         OnPressStart -= MainWindow_OnPressStart;
         OnPressStop -= MainWindow_OnPressStop;
