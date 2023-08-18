@@ -222,24 +222,29 @@ public partial class MainWindow : Window
         
         Thread.Sleep(25);
         var port = sender as SerialPort;
-        var inputString = port.ReadLine().Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
+        if (port == null) return;
 
-        Debug.WriteLine(inputString);
-        switch (inputString)
+        //var inputString = port.ReadLine().Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
+        
+        var bytes = new byte[4];
+        port.Read(bytes, 0, bytes.Length);
+        var hexArray = bytes.Select(b => b.ToString("X2")).ToArray();
+        if (bytes[0] == 50)
         {
-            case "START":
+            OnDeviceCheckOk?.Invoke();
+        }
+
+        switch (bytes[3])
+        {
+            case 1:
                 Dispatcher.Invoke(() => OnPressStart?.Invoke());
                 OnDeviceCheckOk?.Invoke();
                 break;
-            case "STOP":
+            case 2:
                 Dispatcher.Invoke(() => OnPressStop?.Invoke());
                 break;
-            case "NEXT":
+            case 10:
                 Dispatcher.Invoke(() => OnPressNext?.Invoke());
-                break;
-            case "CheckOk":
-                //Debug.WriteLine("MyPort_DataReceived: " + Thread.CurrentThread.ManagedThreadId);
-                OnDeviceCheckOk?.Invoke();
                 break;
             default:
                 break;
