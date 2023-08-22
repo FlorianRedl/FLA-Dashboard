@@ -220,7 +220,7 @@ public partial class MainWindow : Window
     private void MyPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
     {
         
-        Thread.Sleep(25);
+        Thread.Sleep(10); // von 25 => 10
         var port = sender as SerialPort;
         if (port == null) return;
 
