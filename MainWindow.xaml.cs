@@ -45,6 +45,8 @@ public partial class MainWindow : Window
     private bool isDeviceCheckOk = false;
 
     private MediaPlayer mediaPlayer = new MediaPlayer();
+    private string version = "";
+    private string connectedDevice = "";
 
     //Settings
     public bool IsAudioEnabled { get; set; }
@@ -59,7 +61,7 @@ public partial class MainWindow : Window
     {
         instance = this;
         InitializeComponent();
-        var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString(2);
+        version = Assembly.GetExecutingAssembly().GetName().Version?.ToString(2)!;
         tbVersion.Text = $"Version {version}";
         activeStatus = Status.Idle;
 
@@ -164,7 +166,10 @@ public partial class MainWindow : Window
     {
         //Debug.WriteLine("MainWindow_OnDeviceCheckOk: " + Thread.CurrentThread.ManagedThreadId);
         isDeviceCheckOk = true;
-        Dispatcher.Invoke(() => { lbStatus.Text = "verbunden"; });
+        Dispatcher.Invoke(() => { 
+            lbStatus.Text = "verbunden"; 
+            tbVersion.Text = $"{version} | {connectedDevice}";
+        });
     }
 
 
@@ -229,8 +234,9 @@ public partial class MainWindow : Window
         var bytes = new byte[4];
         port.Read(bytes, 0, bytes.Length);
         var hexArray = bytes.Select(b => b.ToString("X2")).ToArray();
-        if (bytes[0] == 50)
+        if (bytes[0] == 02)
         {
+            connectedDevice = $" {hexArray[0]}{hexArray[1]}{hexArray[2]}-{hexArray[3]}";
             OnDeviceCheckOk?.Invoke();
         }
 
